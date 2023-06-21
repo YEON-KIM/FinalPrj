@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<!-- 상품 목록 조회 -->
+    <select id="getProductList" resultType="productVo">
+        SELECT 
+            P.NO
+            ,P.C_NO
+            ,P.NAME
+            ,P.PRICE
+            ,P.INFO
+			,P.COMPONENT
+			,P.MATERIAL
+			,P.P_SIZE
+			,P.GK
+			,P.KK
+			,P.LK
+			,P.QE
+			,P.SS
+			,P.COUNTRY
+			,P.ADVANTAGE
+            ,P.STOCK
+            ,P.IMG AS imgName
+            ,P.ENROLL_DATE
+            ,P.MODIFY_DATE
+            ,P.STATUS
+            ,P.HIT
+            ,P.STAR
+        FROM PRODUCT P
+        INNER JOIN P_CATEGORY C ON (P.C_NO = C.NO)
+        WHERE P.STATUS = 'O'
+        AND P.STOCK > 0
+		<if test="category != null and category != ''">
+    		AND P.C_NO = #{category}
+  		</if>
+		ORDER BY P.NO DESC
+    </select>
+        
+        
+    <!-- 상품 등록 -->
+    <insert id="add">
+		INSERT INTO PRODUCT
+		(
+		    NO
+            ,C_NO
+		    ,NAME
+		    ,PRICE
+		    ,INFO
+            ,COMPONENT
+			,MATERIAL
+			,P_SIZE
+			,GK
+			,KK
+			,LK
+			,QE
+			,SS
+			,COUNTRY
+			,ADVANTAGE
+            ,IMG
+		)
+		VALUES
+		(
+		    SEQ_PRODUCT_NO.NEXTVAL
+		    , #{cNo}
+		    , #{name}
+		    , #{price}
+		    , #{info}
+            , #{component}
+			, #{material}
+			, #{pSize}
+			, #{gk}
+			, #{kk}
+			, #{lk}
+			, #{qe}
+			, #{ss}
+			, #{country}
+			, #{advantage}
+            , #{imgName}
+		)
+	</insert>
+	
+    <!-- 상품 상세 조회 -->
+	<select id="getProduct" resultType="productVo">
+		SELECT 
+		    P.NO
+            ,P.C_NO
+            ,P.NAME
+            ,P.PRICE
+            ,P.INFO
+            ,P.COMPONENT
+			,P.MATERIAL
+			,P.P_SIZE
+			,P.GK
+			,P.KK
+			,P.LK
+			,P.QE
+			,P.SS
+			,P.COUNTRY
+			,P.ADVANTAGE
+            ,P.STOCK
+            ,P.IMG AS imgName
+            ,P.ENROLL_DATE
+            ,P.MODIFY_DATE
+            ,P.STATUS
+            ,P.HIT
+            ,P.STAR
+        FROM    PRODUCT P
+        LEFT    JOIN    P_CATEGORY C ON (P.C_NO = C.NO)
+        WHERE   P.STATUS  = 'O'
+		AND     P.NO      = #{no}
+        AND     P.STOCK   > 0
+	</select>
+	
+	<update id="increaseHit">
+		UPDATE PRODUCT
+		    SET HIT = HIT+1
+	    WHERE   NO = #{no}
+	    AND     STATUS = 'O'
+	</update>
+	
+    <!-- 상품 수정 -->
+	<update id="edit">
+		UPDATE PRODUCT
+	    SET 
+	        C_NO = #{cNo}
+	        , NAME = #{name}
+	        , PRICE = #{price}
+            , INFO = #{info}
+            , COMPONENT = #{component}
+			, MATERIAL = #{material}
+			, P_SIZE = #{pSize}
+			, GK = #{gk}
+			, KK = #{kk}
+			, LK = #{lk}
+			, QE = #{qe}
+			, SS = #{ss}
+			, COUNTRY = #{country}
+			, ADVANTAGE = #{advantage}
+            , IMG = #{imgName}
+            , MODIFY_DATE = SYSDATE
+	    WHERE   NO = #{no}
+	    AND     STATUS = 'O'
+	</update>
+	
+    <!-- 상품 삭제 ( DB에는 남아있게 다음에 다시사용할 수 있게) -->
+	<update id="delete">
+		UPDATE PRODUCT
+	    SET
+	        STATUS = 'X'
+	        , MODIFY_DATE = SYSDATE
+	    WHERE   NO = #{no}
+	</update>
+	
+	<select id="getCnt" resultType="int">
+		SELECT COUNT(NO)
+		FROM PRODUCT P
+		WHERE STATUS = 'O'
+		<if test="searchType == 'name'">
+			AND NAME LIKE '%${searchValue}%'
+		</if>
+		<if test="searchType == 'category'">
+			AND C_NO = #{searchValue}
+		</if>
+	</select>
+	
+    <!-- -->
+	<select id="getCategoryList" resultType="map">
+		SELECT 
+			NO
+			, NAME
+		FROM CATEGORY
+	</select>
+	
+    <!-- 사진 등록 ( 상품 상세 사진 ) -->
+	<insert id="insertAttachment">
+		INSERT ALL
+			<foreach collection="list" item="x" separator=" ">
+			    INTO P_ATTACHMENT
+			    (NO, P_NO, ORIGIN_NAME) 
+			    VALUES 
+			    ((SELECT GET_P_ATTACHMENT_SEQ FROM DUAL), SEQ_PRODUCT_NO.CURRVAL , #{x.originName})
+			</foreach>
+		SELECT 1 FROM DUAL
+	</insert>
+	
+	<!-- 사진 수정 ( 상품 상세 사진 ) -->
+	<update id="updateAttachment">
+		<foreach collection="list" item="x" separator=";" open="DECLARE BEGIN" close="; END;">
+		    UPDATE P_ATTACHMENT
+		    SET ORIGIN_NAME = #{x.originName}
+		    WHERE NO = #{x.no}
+		</foreach>
+	</update>
+	
+    <!-- 상품 상세 사진 불러오기 -->
+	<select id="getAttachmentList" resultType="productFileVo">
+		SELECT 
+			NO
+			,P_NO
+			,ORIGIN_NAME
+			,ENROLL_DATE
+			,STATUS
+		FROM P_ATTACHMENT
+		WHERE P_NO = #{pno}
+		AND STATUS = 'O'
+	</select>
+
+	<!-- 카테고리 불러오기 -->
+	<select id="getCategory" resultType="pCategoryVo">
+		SELECT 
+			NO
+			,NAME
+		FROM P_CATEGORY
+	</select>
+	
+	<!-- 결제 상품 조회 -->
+	<select id="getPayList" resultType="productVo">
+		SELECT 
+		    P.NO
+            ,P.C_NO
+            ,P.NAME
+            ,P.PRICE
+            ,P.INFO
+            ,P.COMPONENT
+			,P.MATERIAL
+			,P.P_SIZE
+			,P.GK
+			,P.KK
+			,P.LK
+			,P.QE
+			,P.SS
+			,P.COUNTRY
+			,P.ADVANTAGE
+            ,P.STOCK
+            ,P.IMG AS imgName
+            ,P.ENROLL_DATE
+            ,P.MODIFY_DATE
+            ,P.STATUS
+            ,P.HIT
+            ,P.STAR
+        FROM    PRODUCT P
+        LEFT    JOIN    P_CATEGORY C ON (P.C_NO = C.NO)
+        WHERE   P.STATUS  = 'O'
+		AND     P.NAME    = #{productName}
+        AND     P.STOCK   > 0
+        ORDER BY P.NO DESC
+	</select>
+	
+	<insert id="addPay">
+		INSERT INTO P_ORDER
+		(
+		    NO, 
+		    M_NO, 
+		    PRODUCT, 
+		    TOTAL_PRICE, 
+		    NAME, 
+		    PH, 
+		    PH2, 
+		    ADDRESS, 
+		    MENT
+		)
+		VALUES
+		(
+		    SEQ_P_ORDER_NO.NEXTVAL
+		    , #{mNo}
+		    , #{product}
+		    , #{totalPrice}
+		    , #{name}
+            , #{ph}
+			, #{ph2}
+			, #{address}
+			, #{ment}
+		)
+	</insert>
+	
+</mapper>

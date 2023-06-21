@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin.member">
+
+    <!-- 관리자 로그인(select) 쿼리문 -->
+    <select id="login" resultType="adminVo">
+        SELECT
+        NO,
+        ID,
+        PASSWORD,
+        MANAGE
+
+        FROM ADMIN
+        WHERE ID = #{id}
+        AND PASSWORD = #{password}
+    </select>
+
+
+    <select id="getMemberList" resultType="memberVo">
+        SELECT
+            NO,
+            ID,
+            PASSWORD,
+            NICK,
+            NAME,
+            GENDER,
+            JUMIN,
+            PHONE,
+            ADDRESS,
+            ENROLL_DATE,
+            QUIT_YN,
+            CON_YN,
+            PROFILE AS profileName,
+            PR
+        FROM MEMBER
+        WHERE QUIT_YN= 'N'
+        ORDER BY NO DESC
+    </select>
+
+
+    <select id="getMemberByNo" resultType="memberVo">
+        SELECT
+            NO,
+            ID,
+            PASSWORD,
+            NICK,
+            NAME,
+            GENDER,
+            JUMIN,
+            PHONE,
+            ADDRESS,
+            ENROLL_DATE,
+            QUIT_YN,
+            CON_YN,
+            PROFILE,
+            PR
+        FROM MEMBER
+        WHERE NO = #{no}
+    </select>
+
+    <update id="deleteMember">
+        UPDATE MEMBER
+        SET
+            QUIT_YN = 'Y'
+        WHERE NO =#{no}
+    </update>
+
+</mapper>

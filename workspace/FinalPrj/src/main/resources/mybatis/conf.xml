@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	
+	</settings>
+  
+  	<typeAliases>
+  		<typeAlias alias="productVo" type="com.dds.app.product.vo.ProductVo"/>
+  		<typeAlias alias="pCategoryVo" type="com.dds.app.product.vo.PCategoryVo"/>
+  		<typeAlias alias="productFileVo" type="com.dds.app.product.vo.ProductFileVo"/>
+  		<typeAlias alias="memberVo" type="com.dds.app.member.vo.MemberVo"/>
+	  	<typeAlias alias="adminVo" type="com.dds.app.admin.vo.AdminVo"/>
+	  	<typeAlias alias="csVo" type="com.dds.app.cs.vo.CsVo"/>
+  		<typeAlias alias="boardVo" type="com.dds.app.board.vo.BoardVo"/>
+      	<typeAlias alias="chatBoardVo" type="com.dds.app.chat.vo.ChatBoardVo"/>
+      	<typeAlias alias="payVo" type="com.dds.app.pay.vo.PayVo"/>
+      	<typeAlias alias="preplyVo" type="com.dds.app.product.reply.vo.PReplyVo"/>
+  		<typeAlias alias="replyVo" type="com.dds.app.board.reply.vo.ReplyVo"/>
+      <typeAlias alias="chatBoardVo" type="com.dds.app.chat.vo.ChatBoardVo"/>
+      <typeAlias alias="chatVo" type="com.dds.app.chat.vo.ChatVo"/>
+  	</typeAliases>
+
+</configuration>

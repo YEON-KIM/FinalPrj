@@ -1,0 +1,60 @@
+#header{
+  text-align: center;
+  font-size: 100px;
+}
+
+#wrap{
+  background-color: #f2f2f2;
+  border: 2px solid #ddd;
+  width: 70%;
+  height: 950px;
+  margin: auto;
+  justify-content: center;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+#main-div{
+  
+}
+#sec-div{
+  
+}
+#thi-div{
+  
+}
+.label{
+  padding-top: 3%;
+  font-size: 40px; 
+}
+.category{
+  font-size: 40px;
+}
+
+
+.head-input {
+	width: 80%;
+	font-size: 27px;
+  color: rgb(45, 45, 72);
+}
+
+
+.category-input{
+  color: rgb(45, 45, 72);
+  font-size: 27px;
+  margin-bottom: 10px;
+}
+
+hr{
+  border-color: blue;
+}
+textarea{
+  width: 100%;
+  height: 30vh;
+}
+#write-button{
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}

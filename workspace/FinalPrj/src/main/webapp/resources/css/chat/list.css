@@ -1,0 +1,27 @@
+#ListTitle{
+	margin-bottom: 50px;
+}
+
+#oneBoard{
+	height: 50px;	 
+	
+}
+
+main table {
+	width: 70%;
+	margin: auto;
+	text-align: center;
+}
+
+
+#write-btn-area{
+	width: 70%;
+	display: flex;
+	flex-direction: row-reverse;
+	margin: auto;
+}
+
+main table > tbody > tr:hover{
+	background-color: lightgray;
+	cursor: pointer;
+ }

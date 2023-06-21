@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+
+	<select id="getChatBoardList" resultType="ChatBoardVo">
+		SELECT 
+			B.NO
+			,B.TITLE
+			,B.CONTENT
+			,B.WRITER_NO
+			,B.ENROLL_DATE
+			,B.STATUS
+			,B.HIT
+            ,M.NICK
+		FROM C_BOARD B
+        JOIN MEMBER M ON (B.WRITER_NO = M.NO)
+		WHERE B.STATUS = 'O'
+        ORDER BY NO DESC
+	</select>
+
+	<insert id="write">
+		INSERT INTO C_BOARD
+		(
+			NO
+			,TITLE
+			,CONTENT
+			,WRITER_NO
+		)
+		VALUES
+		(
+			SEQ_C_BOARD_NO.NEXTVAL
+			, #{title}
+			, #{content}
+			, #{writerNo}
+		)
+	</insert>
+
+	<select id="getChat" resultType="ChatBoardVo">
+		SELECT *
+		FROM C_BOARD
+		WHERE NO = #{num}
+		AND STATUS = 'O'
+	</select>
+
+	<update id="edit">
+		UPDATE C_BOARD
+		SET
+		TITLE = #{title}
+		, CONTENT = #{content}
+		, MODIFY_DATE = SYSDATE
+		WHERE NO = #{no}
+	</update>
+
+	<update id="delete">
+		UPDATE C_BOARD
+		SET
+		STATUS = 'X'
+		, MODIFY_DATE = SYSDATE
+		WHERE NO = #{num}
+	</update>
+
+	<select id="getChatListCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM C_BOARD
+		WHERE STATUS = 'O'
+	</select>
+
+	<update id="increaseHit">
+		UPDATE C_BOARD
+		SET HIT = HIT + 1
+		WHERE NO = #{num}
+		AND STATUS = 'O'
+	</update>
+
+	 <insert id="insertChatMessage" parameterType="java.util.Map">
+        INSERT INTO CHAT_MESSAGE 
+        (
+        	NO,
+        	SENDER, 
+        	<!-- RECIPIENT,  -->
+        	MESSAGE
+        )
+        VALUES 
+        (
+        	SEQ_CHAT_MESSAGE_NO.NEXTVAL,
+        	#{sender}, 
+        	<!-- #{recipient},  -->
+        	#{message}
+        )
+    </insert>
+    
+    <select id="getChatList" resultType="ChatVo">
+    	SELECT * FROM 
+    		CHAT_MESSAGE
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

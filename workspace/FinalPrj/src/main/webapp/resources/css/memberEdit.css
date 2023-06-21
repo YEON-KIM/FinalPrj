@@ -1,0 +1,75 @@
+
+.every_container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 3fr; /* 3개의 열을 생성 */
+    grid-gap: 20px; /* 간격 설정 */
+}
+
+.empty{
+  width: 100%;
+  height: 15vh;
+  
+}
+
+.header_member_div{
+  display: flex; /* Flexbox 사용 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  height: 15vh;
+  width: 100%;
+}
+
+.header_member_edit {
+  text-align: center;
+  color: pink;
+  font-size: 100px;
+  
+
+}
+
+.edit_info_div{
+  width: 100%;
+  height: 12vh;
+  
+}
+
+.edit_input_div{
+  width: 100%;
+  
+}
+
+.edit_input {
+  width: 300px; /* 또는 다른 적절한 값 */
+  height: 50px; /* 또는 다른 적절한 값 */
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border: 2px solid #000000;
+}
+
+input[type="submit"] {
+  width: 200px; /* 또는 다른 적절한 값 */
+  height: 50px; /* 또는 다른 적절한 값 */
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 5px;
+}
+
+.edit_select {
+  width: 200px; /* 또는 다른 적절한 값 */
+  height: 50px; /* 또는 다른 적절한 값 */
+  background-color: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 5px;
+}
+
+.edit_textarea {
+  width: 100%;
+  height: 30vh;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.input-label{
+  font-size: 20px;
+}

@@ -1,0 +1,19 @@
+.main-back{
+    background-color: white;
+    height: 150px;
+}
+
+.a-color-white{
+    color: black;
+    text-decoration: none;
+}
+
+#row a{
+    color: black;
+    text-decoration: none;
+}
+
+.navbar_header{
+	color: black;
+	font-size: 20px;
+}

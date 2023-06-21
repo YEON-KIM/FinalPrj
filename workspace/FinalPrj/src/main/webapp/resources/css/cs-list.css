@@ -1,0 +1,57 @@
+/* 테이블 전체 스타일 */
+.tb {
+  width: 70%;
+  border-collapse: collapse;
+  margin: 0 auto; /* 화면 가운데 정렬 */
+}
+
+/* 테이블 헤더 스타일 */
+.th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* 테이블 행 스타일 */
+.tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tr:hover {
+  background-color: #e9e9e9;
+}
+
+/* 테이블 데이터 셀 스타일 */
+.td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* footer 스타일 */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+}
+#title {
+  text-align: center;
+  font-size: 100px;
+}
+
+
+#search-area {
+  margin: 0 auto;
+  text-align: left;
+  padding-left: 15%;
+}
+
+#write-button {
+  display: flex;
+  justify-content: right;
+  padding-right: 15%;
+}

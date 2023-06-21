@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+<insert id="join">
+
+    <selectKey keyProperty="no" resultType="String" order="BEFORE">
+      SELECT SEQ_MEMBER_NO.NEXTVAL FROM DUAL
+    </selectKey>
+
+    INSERT INTO MEMBER
+    (
+        NO, 
+        ID, 
+        PASSWORD, 
+        NICK, 
+        NAME, 
+        GENDER, 
+        JUMIN, 
+        PHONE, 
+        ADDRESS,
+        PROFILE
+    )
+    VALUES
+    (
+        SEQ_MEMBER_NO.NEXTVAL, 
+        #{id}, 
+        #{password}, 
+        #{nick}, 
+        #{name}, 
+        #{gender}, 
+        #{jumin}, 
+        #{phone}, 
+        #{address},
+        #{profileName}
+    )
+</insert>
+
+	
+
+	
+	<select id="checkId" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="checkNick" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE NICK = #{nick}
+	</select>
+	
+	<select id="checkPhone" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE PHONE = #{phone}
+	</select>
+	
+	
+	
+	<!-- 회원 로그인(select) 쿼리문 -->
+	<select id="login" resultType="memberVo">
+  		SELECT 
+  			NO, 
+	        ID, 
+	        PASSWORD, 
+	        NICK, 
+	        NAME, 
+	        GENDER, 
+	        JUMIN, 
+	        PHONE, 
+	        ADDRESS,
+	        PROFILE AS profileName
+  		
+  		FROM MEMBER
+  		WHERE ID = #{id}
+    		AND QUIT_YN = 'N'
+	</select>
+
+	<update id="edit">
+		UPDATE MEMBER
+		SET
+		NICK = #{nick}
+		, PASSWORD = #{password}
+		, ADDRESS = #{address}
+		, JUMIN = #{jumin}
+		, GENDER = #{gender}
+		, PR = #{pr}
+		WHERE
+		NO = #{no}
+	</update>
+
+
+  <select id="getMember" resultType="memberVo">
+  	SELECT
+		PASSWORD,
+		NICK,
+		NAME,
+		GENDER,
+		JUMIN,
+		ADDRESS,
+		PROFILE
+  	FROM MEMBER
+  	WHERE NO = #{no}
+  </select>
+  
+	<select id="getPayList" resultType="payVo">
+	  	SELECT
+			NO
+			, M_NO
+			, PRODUCT
+			, TOTAL_PRICE
+			, NAME
+			, PH
+			, PH2
+			, ADDRESS
+			, MENT
+			, ENROLL_DATE
+	  	FROM P_ORDER
+	  	WHERE M_NO = #{no}
+  	</select>
+  	
+  	<select id="getPay" resultType="payVo">
+  		SELECT *
+		FROM (
+		    SELECT *
+		    FROM P_ORDER
+		    ORDER BY NO DESC
+		)
+		WHERE ROWNUM = 1
+  	</select>
+	
+	
+		
+
+</mapper>

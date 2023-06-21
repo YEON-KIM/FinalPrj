@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="productReply">
+
+	<select id="getReplyList" resultType="preplyVo">
+		SELECT 
+		    R.NO
+		    ,R.P_NO
+		    ,R.CONTENT
+		    ,R.WRITER_NO
+		    ,R.ENROLL_DATE
+		    ,R.STATUS
+		    ,R.STAR
+		    ,M.NICK		AS writerNick
+		FROM P_REPLY R
+		JOIN MEMBER M ON (R.WRITER_NO = M.NO)
+		WHERE R.P_NO = #{pNo}
+		AND R.STATUS = 'O'
+		ORDER BY NO DESC
+	</select>
+
+	<insert id="write">
+		
+		INSERT INTO P_REPLY
+		(
+		    NO
+		    ,P_NO
+		    ,CONTENT
+		    ,WRITER_NO
+		    ,STAR
+		)
+		VALUES
+		(
+		    SEQ_P_REPLY_NO.NEXTVAL
+		    , #{pNo}
+		    , #{content}
+		    , #{writerNo}
+		    , #{star}
+		)
+		
+	</insert>
+	
+	<update id="delete">
+		UPDATE P_REPLY
+		    SET STATUS = 'X'
+		WHERE NO = #{no}
+		AND ( WRITER_NO = #{writerNo}  OR  ${writerNo} = 1 )
+	</update>
+	
+	<update id="edit">
+		UPDATE P_REPLY
+		    SET CONTENT = #{content}
+		WHERE NO = #{no}
+		AND STATUS = 'O'
+		AND WRITER_NO = #{writerNo}
+	</update>
+
+</mapper>

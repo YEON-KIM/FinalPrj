@@ -1,0 +1,36 @@
+/* room.css */
+
+.chat-wrapper {
+  display: flex;
+  height: 600px;
+  flex-direction: column;
+  overflow-y: auto;
+  border: 1px solid #000;
+  background-color: greenyellow;
+}
+
+.myMsg-area {
+  border-radius: 10px;
+  margin-bottom: 5px;
+  background-color: #FFF;
+  color: #000;
+}
+
+
+.anotherMsg-area {
+  border-radius: 10px;
+  margin-bottom: 5px;
+  background-color: yellow;
+  color: #000;
+}
+
+.myNick-area,
+.myMsg-area {
+  align-self: flex-end;
+}
+
+.anotherNick-area,
+.anotherMsg-area {
+  
+  align-self: flex-start;
+}
