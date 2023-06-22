@@ -7,6 +7,13 @@
 ## 맡은 파트
 전반적인 게시판
 <br><br>
+## 개발 환경
+1.STS<br>
+2.Apache Tomcat 9.0<br>
+3.SQL Developer<br>
+4.Mybatis<br>
+5.maven
+<br><br>
 ## 메인 페이지
 ![](image/1.png)
 <br><br>
